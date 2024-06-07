@@ -11,8 +11,14 @@ class FrontendController extends Controller
 {
     public function index()
     {
+        $search = request()->query('search');
+        if($search){
+            $posts = Post::where('title', 'LIKE', "%{$search}%")->simplePaginate(1);
+        } else{
+            $posts = Post::orderBy('created_at', 'desc')->paginate(3);
+        }
         return view('frontend.index')
-        ->with('posts', Post::orderBy('created_at', 'desc')->get())
+        ->with('posts', $posts)
         ->with('tags', Tag::all())
         ->with('categories', Category::all());
     }

@@ -8,7 +8,7 @@
         <!-- Post Section -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <!-- Post 1 -->
-            @foreach ( $posts as $post )
+            @forelse ( $posts as $post )
             <div class="bg-white shadow-md">
                 <img src="{{ asset('/storage/'.$post->image) }}" alt="Post Image" class="w-full h-64 object-cover">
                 <div class="p-6">
@@ -26,7 +26,12 @@
                     <a href="{{ route('blog.show', $post->id) }}" class="block mt-4 text-blue-500 hover:underline">Read more</a>
                 </div>
             </div>
-            @endforeach
+            @empty
+            <p>No result found for search: <strong>{{ request()->query('search') }}</strong></p>
+            @endforelse
+        </div>
+        <div class="my-4">
+            {{ $posts->appends(['search' => request()->query('search')])->links() }}
         </div>
     </div>
 
@@ -34,7 +39,9 @@
     <div class="md:w-1/5 md:pl-16 mb-8 pt-14">
         <!-- Search Bar -->
         <div class="mb-6">
-            <input type="text" placeholder="Search" class="w-full border border-gray-300 rounded-lg px-4 py-2">
+            <form action="{{ route('welcome') }}" method="GET">
+                <input type="text" name="search" value="{{ request()->query('search') }}" placeholder="Search" class="w-full border border-gray-300 rounded-lg px-4 py-2">
+            </form>
         </div>
         <!-- Categories -->
         <div class="mb-6">
@@ -51,6 +58,15 @@
             <ul>
                 @foreach ($posts->take(4) as $post )
                 <li><a href="{{ route('blog.show', $post->id) }}" class="hover:text-blue-400 text-blue-500">{{ $post->title }}</a></li>
+                @endforeach
+            </ul>
+        </div>
+        <!-- Tags -->
+        <div class="mb-6">
+            <h2 class="text-xl font-bold mb-4">Tags</h2>
+            <ul>
+                @foreach ($tags as $tag )
+                <li><a href="#" class="hover:text-gray-600">{{ $tag->name }}</a></li>
                 @endforeach
             </ul>
         </div>

@@ -25,7 +25,7 @@
                         @auth
                             <a href="{{ url('/dashboard') }}" class="hover:text-gray-200">{{ Auth::user()->name }}</a>
                         @else
-                            <li><a href="#" class="hover:text-gray-200">Home</a></li>
+                            <li><a href="{{ route('welcome') }}" class="hover:text-gray-200">Home</a></li>
                             <li><a href="#" class="hover:text-gray-200">About</a></li>
                             <li><a href="#" class="hover:text-gray-200">Blog</a></li>
                             <li><a href="#" class="hover:text-gray-200">Contact</a></li>

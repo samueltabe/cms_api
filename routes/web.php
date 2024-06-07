@@ -29,7 +29,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/', [FrontendController::class, 'index']);
+Route::get('/', [FrontendController::class, 'index'])->name('welcome');
 Route::get('/frontend/{post}', [FrontendController::class, 'single'])->name('blog.show');
 
 Route::middleware('auth')->group(function () {
@@ -45,6 +45,9 @@ Route::middleware('auth')->group(function () {
 
     Route::get('users', [UsersController::class, 'index'])->name('users.index')->middleware('admin');
     Route::post('users/{user}/make-admin', [UsersController::class, 'makeAdmin'])->name('users.make-admin')->middleware('admin');
+
+    Route::get('/category/{category}', [PostsController::class, 'category'])->name('blog.category');
+    Route::get('/tag/{tag}', [PostsController::class, 'tag'])->name('blog.tag');
 });
 
 

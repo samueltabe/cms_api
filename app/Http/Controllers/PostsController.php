@@ -142,4 +142,14 @@ class PostsController extends Controller
 
         return redirect()->back();
     }
+
+    public function category(Category $category)
+    {
+        return view('blog.category')->with('category', $category);
+    }
+
+    public function tag(Tag $tag)
+    {
+        return view('blog.tag')->with('tag', $tag);
+    }
 }
